@@ -1,0 +1,7 @@
+package rules.datatypes.person;
+
+declare Person
+  firstName: String
+  lastName: String
+  age: Integer
+end

@@ -1,0 +1,12 @@
+package rules.riskassessment.checkage;
+
+import rules.datatypes.person.*;
+
+dialect "java"
+
+rule "must be at least 18 years old"
+  when
+    Person( age < 18 )
+  then
+    insertLogical("VIOLATION: age < 18");
+end
