@@ -17,12 +17,14 @@
  */
 package de.lightful.drools.apitests;
 
+import de.lightful.maven.plugins.drools.knowledgeio.KnowledgePackageFormatter;
 import org.drools.KnowledgeBase;
 import org.drools.KnowledgeBaseFactory;
 import org.drools.builder.KnowledgeBuilder;
 import org.drools.builder.KnowledgeBuilderConfiguration;
 import org.drools.builder.KnowledgeBuilderFactory;
 import org.drools.builder.ResourceType;
+import org.drools.builder.conf.DumpDirOption;
 import org.drools.core.util.DroolsStreamUtils;
 import org.drools.definition.KnowledgePackage;
 import org.drools.definition.type.FactType;
@@ -31,10 +33,11 @@ import org.drools.runtime.StatefulKnowledgeSession;
 import org.drools.runtime.rule.FactHandle;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import org.testng.log4testng.Logger;
 
 import java.io.File;
 import java.io.FileReader;
-import java.net.URL;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.Properties;
 
@@ -43,8 +46,9 @@ import static org.fest.assertions.Assertions.assertThat;
 @Test
 public class DroolsPackagingTest {
 
+  private static Logger log = Logger.getLogger(DroolsPackagingTest.class);
+
   private static final String RULE_BASE_PATH = "src/test/rules";
-  public static final String PROPERTY_NAME_DROOLS_DUMP_DIR = "drools.dump.dir";
   private byte[] dataTypesKnowledgePackages;
   private FactType personType;
 
@@ -61,19 +65,21 @@ public class DroolsPackagingTest {
 
   private KnowledgeBuilderConfiguration configureDumpDirectory() {
     Properties properties = new Properties();
-    properties.setProperty(PROPERTY_NAME_DROOLS_DUMP_DIR, "src/generated");
-    return KnowledgeBuilderFactory.newKnowledgeBuilderConfiguration(properties, (ClassLoader) null);
+    final KnowledgeBuilderConfiguration configuration = KnowledgeBuilderFactory.newKnowledgeBuilderConfiguration(properties, (ClassLoader) null);
+    configuration.setOption(DumpDirOption.get(new File("src/generated")));
+    return configuration;
   }
 
   @Test
   public void test_can_reuse_existing_binary_package() throws Exception {
     @SuppressWarnings("unchecked")
-    Collection<KnowledgePackage> dataTypesKnowledgePackages = (Collection<KnowledgePackage>) DroolsStreamUtils.streamIn(
-        this.dataTypesKnowledgePackages, true);
-
-    KnowledgeBase existingKnowledgeBase = KnowledgeBaseFactory.newKnowledgeBase();
-    existingKnowledgeBase.addKnowledgePackages(dataTypesKnowledgePackages);
+    Collection<KnowledgePackage> dataTypesKnowledgePackages = loadDataTypeKnowledge();
+    KnowledgeBase existingKnowledgeBase = createKnowledgeBaseContaining(dataTypesKnowledgePackages);
     KnowledgeBuilder builderWithExistingKnowledge = KnowledgeBuilderFactory.newKnowledgeBuilder(existingKnowledgeBase, configureDumpDirectory());
+
+    String existingKnowledgeDump = KnowledgePackageFormatter.dumpKnowledgePackages(existingKnowledgeBase.getKnowledgePackages());
+    log.info("Existing Knowledge:\n" + existingKnowledgeDump);
+
     Collection<KnowledgePackage> assessmentRulesPackage = packageRules(builderWithExistingKnowledge, "risk-assessment/check-age.drl");
 
     existingKnowledgeBase.addKnowledgePackages(assessmentRulesPackage);
@@ -82,6 +88,17 @@ public class DroolsPackagingTest {
     session.fireAllRules();
     Collection<FactHandle> factHandles = session.getFactHandles();
     assertThat(factHandles.contains("VIOLATION: age < 18"));
+  }
+
+  private KnowledgeBase createKnowledgeBaseContaining(Collection<KnowledgePackage> dataTypesKnowledgePackages) {
+    KnowledgeBase existingKnowledgeBase = KnowledgeBaseFactory.newKnowledgeBase();
+    existingKnowledgeBase.addKnowledgePackages(dataTypesKnowledgePackages);
+    return existingKnowledgeBase;
+  }
+
+  @SuppressWarnings("unchecked")
+  private Collection<KnowledgePackage> loadDataTypeKnowledge() throws IOException, ClassNotFoundException {
+    return (Collection<KnowledgePackage>) DroolsStreamUtils.streamIn(this.dataTypesKnowledgePackages, true);
   }
 
   private Object createPersonWithAge(KnowledgeBase kbase, int age) throws IllegalAccessException, InstantiationException {
