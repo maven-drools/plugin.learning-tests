@@ -27,7 +27,7 @@
 
   <groupId>de.lightful.maven.plugins.drools</groupId>
   <artifactId>api-tests</artifactId>
-  <version>${parent.version}</version>
+  <version>${project.parent.version}</version>
   <packaging>jar</packaging>
 
   <name>Maven Drools Plugin :: API Tests</name>
