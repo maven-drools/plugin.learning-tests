@@ -77,8 +77,8 @@ public class DroolsPackagingTest {
     KnowledgeBase existingKnowledgeBase = createKnowledgeBaseContaining(dataTypesKnowledgePackages);
     KnowledgeBuilder builderWithExistingKnowledge = KnowledgeBuilderFactory.newKnowledgeBuilder(existingKnowledgeBase, configureDumpDirectory());
 
-    String existingKnowledgeDump = KnowledgePackageFormatter.dumpKnowledgePackages(existingKnowledgeBase.getKnowledgePackages());
-    log.info("Existing Knowledge:\n" + existingKnowledgeDump);
+    log.info("Existing Knowledge:\n");
+    KnowledgePackageFormatter.dumpKnowledgePackages(new TestNGLogger(log), existingKnowledgeBase.getKnowledgePackages());
 
     Collection<KnowledgePackage> assessmentRulesPackage = packageRules(builderWithExistingKnowledge, "risk-assessment/check-age.drl");
 
