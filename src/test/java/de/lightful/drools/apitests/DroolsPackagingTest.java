@@ -72,7 +72,6 @@ public class DroolsPackagingTest {
 
   @Test
   public void test_can_reuse_existing_binary_package() throws Exception {
-    @SuppressWarnings("unchecked")
     Collection<KnowledgePackage> dataTypesKnowledgePackages = loadDataTypeKnowledge();
     KnowledgeBase existingKnowledgeBase = createKnowledgeBaseContaining(dataTypesKnowledgePackages);
     KnowledgeBuilder builderWithExistingKnowledge = KnowledgeBuilderFactory.newKnowledgeBuilder(existingKnowledgeBase, configureDumpDirectory());

@@ -17,9 +17,9 @@
  */
 package de.lightful.drools.apitests;
 
-import de.lightful.maven.plugins.drools.knowledgeio.Logger;
+import de.lightful.maven.plugins.drools.knowledgeio.LogStream;
 
-public class TestNGLogger implements Logger<TestNGLogger> {
+public class TestNGLogger implements LogStream<TestNGLogger> {
 
   private static final String NEWLINE = System.getProperty("line.separator");
 
