@@ -30,7 +30,7 @@ public class TestNGLogger implements LogStream<TestNGLogger> {
     this.logger = logger;
   }
 
-  public TestNGLogger log(String message) {
+  public TestNGLogger write(String message) {
     stringBuffer.append(message);
     if (message.endsWith(NEWLINE)) {
       return nl();
