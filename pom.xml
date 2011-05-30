@@ -34,7 +34,6 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <dependency.drools.version>5.1.1</dependency.drools.version>
   </properties>
 
   <dependencies>
@@ -58,12 +57,12 @@
     <dependency>
       <groupId>org.drools</groupId>
       <artifactId>drools-api</artifactId>
-      <version>${dependency.drools.version}</version>
+      <version>${drools.version}</version>
     </dependency>
     <dependency>
       <groupId>org.drools</groupId>
       <artifactId>drools-compiler</artifactId>
-      <version>${dependency.drools.version}</version>
+      <version>${drools.version}</version>
     </dependency>
 
 
