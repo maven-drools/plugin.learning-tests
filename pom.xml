@@ -50,15 +50,16 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>de.lightful.maven.plugins.drools.knowledge-io</groupId>
-      <artifactId>variants</artifactId>
-      <type>pom</type>
+      <groupId>de.lightful.maven.plugins.drools</groupId>
+      <artifactId>knowledge-io</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
-      <groupId>de.lightful.maven.plugins.drools.knowledge-io</groupId>
-      <artifactId>knowledge-io-5.1.1</artifactId>
+      <groupId>de.lightful.maven.plugins.drools.runtimeprovider</groupId>
+      <artifactId>drools-5.1.1</artifactId>
       <version>${project.version}</version>
+      <type>pom</type>
+      <scope>import</scope>
     </dependency>
   </dependencies>
 
