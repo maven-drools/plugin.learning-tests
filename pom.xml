@@ -20,26 +20,28 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>de.lightful.maven.drools</groupId>
-    <artifactId>project-parent</artifactId>
-    <version>0.0.16-SNAPSHOT</version>
+    <groupId>de.lightful.poms</groupId>
+    <artifactId>java-library</artifactId>
+    <version>3</version>
   </parent>
 
-  <groupId>de.lightful.maven.drools</groupId>
-  <artifactId>api-tests</artifactId>
-  <version>0.0.16-SNAPSHOT</version>
+  <groupId>de.lightful.maven.drools.plugin</groupId>
+  <artifactId>learning-tests</artifactId>
+  <version>0.1.0-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <name>Maven Drools Plugin :: API Tests</name>
+  <name>Maven Drools Support :: Plugin :: Learning Tests</name>
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
+  <scm>
+    <connection>scm:git:git@github.com:maven-drools/learning-tests.git</connection>
+    <developerConnection>scm:git:git@github.com:maven-drools/learning-tests.git</developerConnection>
+  </scm>
 
   <dependencies>
     <dependency>
       <groupId>org.testng</groupId>
       <artifactId>testng</artifactId>
+      <version>6.2</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -49,8 +51,9 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>de.lightful.maven.drools</groupId>
+      <groupId>de.lightful.maven.drools.plugin</groupId>
       <artifactId>knowledge-io</artifactId>
+      <version>0.1.0</version>
     </dependency>
     <dependency>
       <groupId>org.drools</groupId>
@@ -68,14 +71,5 @@
       <version>5.1.1</version>
     </dependency>
   </dependencies>
-
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-      </plugin>
-    </plugins>
-  </build>
 
 </project>
