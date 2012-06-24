@@ -32,6 +32,10 @@
 
   <name>Maven Drools Support :: Plugin :: Learning Tests</name>
 
+  <properties>
+    <drools.runtime.version>5.2.0.Final</drools.runtime.version>
+  </properties>
+
   <scm>
     <connection>scm:git:git@github.com:maven-drools/learning-tests.git</connection>
     <developerConnection>scm:git:git@github.com:maven-drools/learning-tests.git</developerConnection>
@@ -57,18 +61,18 @@
     </dependency>
     <dependency>
       <groupId>org.drools</groupId>
-      <artifactId>drools-api</artifactId>
-      <version>5.1.1</version>
+      <artifactId>knowledge-api</artifactId>
+      <version>[${drools.runtime.version}]</version>
     </dependency>
     <dependency>
       <groupId>org.drools</groupId>
       <artifactId>drools-compiler</artifactId>
-      <version>5.1.1</version>
+      <version>[${drools.runtime.version}]</version>
     </dependency>
     <dependency>
       <groupId>org.drools</groupId>
       <artifactId>drools-core</artifactId>
-      <version>5.1.1</version>
+      <version>[${drools.runtime.version}]</version>
     </dependency>
   </dependencies>
 
